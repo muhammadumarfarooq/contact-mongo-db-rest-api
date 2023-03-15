@@ -3,10 +3,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.get('/api/get-test', (req, res) => {
-    res.json({message: 'Some message will go here...'});
-});
-
+app.use('/api/v2', require('./routes/contact.routes'));
 
 const port = process.env.PORT;
 
