@@ -1,5 +1,5 @@
 const express = require('express');
-const {getContacts, createContact, getContact, updateContact, deleteContact} = require("../controllers/contact.controller");
+import {getContacts, createContact, getContact, updateContact, deleteContact} from "../controllers/contact.controller";
 const router = express.Router();
 
 router.get('/contacts', (req, res) => {
@@ -29,4 +29,4 @@ router.delete('/contacts/:id', (req, res) => {
 });
 
 
-module.exports = router;
+export default router;
