@@ -8,6 +8,7 @@ router.get('/contacts', (req, res) => {
 });
 
 router.post('/contacts', (req, res) => {
+    console.log(req.body);
     createContact();
     res.status(200).json({message: 'Create contacts'});
 });

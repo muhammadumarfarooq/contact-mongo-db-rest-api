@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(express.json());
 app.use('/api/v2', require('./routes/contact.routes'));
 
 const port = process.env.PORT;
