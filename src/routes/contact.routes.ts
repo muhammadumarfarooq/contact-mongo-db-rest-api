@@ -14,10 +14,14 @@ router.get('/contacts', async (req, res) => {
     }
 });
 
-router.post('/contacts', (req, res) => {
-    console.log(req.body);
-    createContact();
-    res.status(200).json({message: 'Create contacts'});
+router.post('/contacts', async (req, res) => {
+    try{
+        const result = await createContact(req.body);
+        return res.json(result);
+    }catch (err) {
+        const {status, data} = handleError(err);
+        return res.status(status).send(data);
+    }
 });
 
 router.get('/contacts/:id', (req, res) => {

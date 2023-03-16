@@ -1,7 +1,8 @@
-import Contacts, {ContactDoc} from '../models/contact.model';
+import Contact, {ContactDoc} from '../models/contact.model';
 import {BadRequest} from "../errors";
+import {CreateContactDto} from "../validation/contact";
 
-const mapContacts = (contact: ContactDoc) => ({
+const mapContact = (contact: ContactDoc) => ({
     id: contact.id,
     name: contact.name,
     email: contact.email,
@@ -9,16 +10,37 @@ const mapContacts = (contact: ContactDoc) => ({
 });
 
 export const getContacts = async () => {
-    const contacts = await Contacts.find();
+    const contacts = await Contact.find();
     if(!contacts){
         throw new BadRequest('Unable to get contacts');
     }
 
-    return contacts.map(mapContacts);
+    return contacts.map(mapContact);
 }
 
-export const createContact = () => {
-    // create contact logic will go here...
+export const createContact = async (params: CreateContactDto) => {
+
+    const foundContact = await Contact.findOne({
+        phone: params.phone
+    });
+
+    if(foundContact){
+        throw new BadRequest('A contact with the same phone number already exist!');
+    }
+
+    const contact = {
+        name: params.name,
+        phone: params.phone,
+        email: params.email,
+    };
+
+    const newContact = await Contact.create(contact);
+
+    if(!newContact){
+       throw new BadRequest('Unable to create new contact');
+    }
+
+    return mapContact(newContact)
 }
 
 export const getContact = () => {
