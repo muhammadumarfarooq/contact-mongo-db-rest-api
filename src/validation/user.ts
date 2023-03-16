@@ -8,5 +8,10 @@ export const registerUserSchema = z.object({
     email: zodAnyString,
     password: zodAnyString,
 });
+export const loginUserSchema = z.object({
+    email: zodAnyString,
+    password: zodAnyString,
+});
 
 export type RegisterUserDto = z.infer<typeof registerUserSchema>;
+export type LoginUserDto = z.infer<typeof loginUserSchema>;
