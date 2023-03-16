@@ -1,6 +1,6 @@
 import Contact, {ContactDoc} from '../models/contact.model';
 import {BadRequest} from "../errors";
-import {CreateContactDto, UpdateContactDto} from "../validation/contact";
+import {CreateContactDto, UpdateContactDto} from "../validation";
 
 const mapContact = (contact: ContactDoc) => ({
     id: contact.id,

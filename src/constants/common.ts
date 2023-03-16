@@ -1,3 +1,4 @@
 export const CollectionNames = {
-    CONTACT: 'Contact'
+    CONTACT: 'Contact',
+    USER: 'User'
 };
