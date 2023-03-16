@@ -9,4 +9,12 @@ export const createContactSchema = z.object({
     phone: zodAnyString,
 });
 
+export const updateContactSchema = z.object({
+    id: zodAnyString,
+    name: zodAnyString,
+    email: zodAnyString,
+    phone: zodAnyString,
+});
+
 export type CreateContactDto = z.infer<typeof createContactSchema>;
+export type UpdateContactDto = z.infer<typeof updateContactSchema>;

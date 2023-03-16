@@ -1,6 +1,6 @@
 import Contact, {ContactDoc} from '../models/contact.model';
 import {BadRequest} from "../errors";
-import {CreateContactDto} from "../validation/contact";
+import {CreateContactDto, UpdateContactDto} from "../validation/contact";
 
 const mapContact = (contact: ContactDoc) => ({
     id: contact.id,
@@ -51,10 +51,12 @@ export const getContact = async (id: string) => {
     return mapContact(foundContact);
 }
 
-export const updateContact = () => {
-    // update contact logic will go here...
+export const updateContact = async (id: string, params: UpdateContactDto) => {
+    const updatedContact = await Contact.findByIdAndUpdate(id, params);
+    return mapContact(updatedContact);
 }
 
-export const deleteContact = () => {
-    // delete contact logic will go here...
+export const deleteContact = async (id: string) => {
+    const deletedContact = await Contact.findByIdAndDelete(id);
+    return mapContact(deletedContact);
 }
