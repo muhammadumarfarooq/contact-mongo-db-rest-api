@@ -1,10 +1,17 @@
+import {handleError} from "../errors";
+
 const express = require('express');
 import {getContacts, createContact, getContact, updateContact, deleteContact} from "../controllers/contact.controller";
 const router = express.Router();
 
-router.get('/contacts', (req, res) => {
-    getContacts();
-    res.status(200).json({message: 'Get contacts'});
+router.get('/contacts', async (req, res) => {
+    try {
+        const result = await getContacts();
+        return res.json(result);
+    }catch (err){
+        const {status, data} = handleError(err);
+        return res.status(status).send(data);
+    }
 });
 
 router.post('/contacts', (req, res) => {
