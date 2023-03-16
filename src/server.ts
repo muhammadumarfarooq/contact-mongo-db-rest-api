@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import userRoutes from './routes/user.routes';
 import contactRoutes from './routes/contact.routes';
 import {connectDb} from "./config/connectDb";
 
@@ -9,7 +10,7 @@ connectDb();
 const app = express();
 
 app.use(express.json());
-app.use('/api/v2', contactRoutes);
+app.use('/api/v2', [contactRoutes, userRoutes]);
 
 const port = process.env.PORT;
 

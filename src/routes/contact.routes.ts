@@ -1,6 +1,6 @@
-import {handleError} from "../errors";
+import express from 'express';
 
-const express = require('express');
+import {handleError} from "../errors";
 import {getContacts, createContact, getContact, updateContact, deleteContact} from "../controllers/contact.controller";
 const router = express.Router();
 
