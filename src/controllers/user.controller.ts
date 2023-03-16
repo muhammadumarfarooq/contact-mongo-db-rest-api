@@ -1,8 +1,15 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {LoginUserDto, RegisterUserDto} from "../validation";
-import User from "../models/user.model";
+import User, {UserDoc} from "../models/user.model";
 import {BadRequest} from "../errors";
+
+const mapUser = (user: UserDoc) => ({
+    id: user.id,
+    name: user.username,
+    email: user.email,
+});
+
 
 export const registerUser = async (params: RegisterUserDto) => {
     const userAvailable = await User.findOne({email: params.email});
@@ -37,3 +44,12 @@ export const loginUser = async (params: LoginUserDto) => {
         throw new BadRequest('User or password is incorrect');
     }
 }
+
+export const getUser = async (id: string) => {
+    const foundUser = await User.findById(id);
+    if(!foundUser){
+        throw new BadRequest('User not found');
+    }
+
+    return mapUser(foundUser);
+};
