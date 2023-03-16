@@ -43,8 +43,12 @@ export const createContact = async (params: CreateContactDto) => {
     return mapContact(newContact)
 }
 
-export const getContact = () => {
-    // get single contact logic will go here...
+export const getContact = async (id: string) => {
+    const foundContact = await Contact.findById(id);
+    if(!foundContact){
+        throw new BadRequest('Unable to find contact');
+    }
+    return mapContact(foundContact);
 }
 
 export const updateContact = () => {

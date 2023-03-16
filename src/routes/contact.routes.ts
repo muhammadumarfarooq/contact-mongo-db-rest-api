@@ -24,9 +24,14 @@ router.post('/contacts', async (req, res) => {
     }
 });
 
-router.get('/contacts/:id', (req, res) => {
-    getContact();
-    res.status(200).json({message: `Get contact with id ${req.params.id}`});
+router.get('/contacts/:id', async (req, res) => {
+    try{
+        const result = await getContact(req.params.id);
+        return res.json(result);
+    }catch(err){
+        const {status, data} = handleError(err);
+        return res.status(status).send(data);
+    }
 });
 
 router.put('/contacts/:id', (req, res) => {
