@@ -10,6 +10,7 @@ const getJwtToken = (req: Request) => {
 
 export const userAuthentication = async (req, res, next) => {
     const token = getJwtToken(req);
+
     if(!token){
         res.status(401).send({
             status: 'danger',
@@ -27,7 +28,7 @@ export const userAuthentication = async (req, res, next) => {
             });
         }
 
-        req.user = decoded.user;
+        req.user = decoded.user as any;
         req.token = token;
 
         return next();

@@ -1,5 +1,5 @@
 export interface ContactSchema {
-    locationId: string;
+    userId: string;
     phone: string;
     name: string;
     email: string;

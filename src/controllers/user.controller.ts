@@ -10,7 +10,6 @@ const mapUser = (user: UserDoc) => ({
     email: user.email,
 });
 
-
 export const registerUser = async (params: RegisterUserDto) => {
     const userAvailable = await User.findOne({email: params.email});
     if(userAvailable){
@@ -38,7 +37,7 @@ export const loginUser = async (params: LoginUserDto) => {
             id: user.id,
             }},
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '1m'}
+            {expiresIn: '30m'}
         );
     } else{
         throw new BadRequest('User or password is incorrect');

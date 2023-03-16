@@ -10,7 +10,7 @@ connectDb();
 const app = express();
 
 app.use(express.json());
-app.use('/api/v2', [contactRoutes, userRoutes]);
+app.use('/api/v2', [userRoutes, contactRoutes]);
 
 const port = process.env.PORT;
 

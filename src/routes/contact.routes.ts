@@ -2,11 +2,14 @@ import express from 'express';
 
 import {handleError} from "../errors";
 import {getContacts, createContact, getContact, updateContact, deleteContact} from "../controllers/contact.controller";
+import {userAuthentication} from "../middlewares";
+import {AuthenticatedRequest} from "../types";
 const router = express.Router();
 
-router.get('/contacts', async (req, res) => {
+router.use(userAuthentication);
+router.get('/contacts', async (req: AuthenticatedRequest, res) => {
     try {
-        const result = await getContacts();
+        const result = await getContacts(req.user.id);
         return res.json(result);
     }catch (err){
         const {status, data} = handleError(err);
@@ -14,9 +17,9 @@ router.get('/contacts', async (req, res) => {
     }
 });
 
-router.post('/contacts', async (req, res) => {
+router.post('/contacts', async (req: AuthenticatedRequest, res) => {
     try{
-        const result = await createContact(req.body);
+        const result = await createContact(req.user.id, req.body);
         return res.json(result);
     }catch (err) {
         const {status, data} = handleError(err);
@@ -34,9 +37,9 @@ router.get('/contacts/:id', async (req, res) => {
     }
 });
 
-router.put('/contacts/:id', async (req, res) => {
+router.put('/contacts/:id', async (req: AuthenticatedRequest, res) => {
     try{
-        const result = await updateContact(req.params.id, req.body);
+        const result = await updateContact(req.user.id, req.params.id, req.body);
         return res.json(result);
     }catch(err){
         const {status, data} = handleError(err);
@@ -44,15 +47,14 @@ router.put('/contacts/:id', async (req, res) => {
     }
 });
 
-router.delete('/contacts/:id', async (req, res) => {
+router.delete('/contacts/:id', async (req: AuthenticatedRequest, res) => {
     try{
-        const result = await deleteContact(req.params.id);
+        const result = await deleteContact(req.user.id, req.params.id);
         return res.json(result);
     }catch(err){
         const {status, data} = handleError(err);
         return res.status(status).send(data);
     }
 });
-
 
 export default router;
